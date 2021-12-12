@@ -1,0 +1,45 @@
+import java.util.Scanner; //Imports scanner
+import java.util.Random; //Imports .Random (number generation)
+
+class PlacingShipsMethod {
+  public static void main (String args[]) { //main class
+    
+    Scanner myScanner = new Scanner(System.in); //Creates scanner
+    
+    int shipsGrid[][] = new int [10][10]; //rows and columns - creates 10x10 grid
+  }
+  
+  private static void placeShips (String name, int size, int shipNumber, int[][] shipsGrid){
+    
+    int[] coordinates = new int[2]; //this array will store the first coordinates
+    
+    
+    for(int i = 0; i < coordinates.length; i++){ //generates first coordinates
+      coordinates[i] = new Random().nextInt(shipsGrid.length);
+      if ((coordinates[i] + size) > 10){ // to prevent an out of bounds error when creating the rest of the coords
+        coordinates[i] = new Random().nextInt(shipsGrid.length);
+      } //end of for loop
+    }  
+    
+    int r = coordinates[0]; //assigns the generated coordinate to the rows variable
+    int c = coordinates[1]; //assigns the generated coordinate to the collumns variable
+    
+    shipsGrid[r][c] = shipNumber; //first coord is placed on the 2d array
+    
+    int randNumber = new Random().nextInt(100) + 1; //generates new number -decides whether ship is verticle or horizontal
+    
+    if((randNumber % 2) == 0){ //if num is even, ship is horizontal
+      for(int j = 0; j < (size - 1); j++){
+        r++;
+        shipsGrid[r][c] = shipNumber;
+      }
+    } 
+    
+    else{ //if num is odd, ship is verticle
+      for (int j = 0; j < (size - 1); j++){
+        c++;
+        shipsGrid[r][c] = shipNumber;
+      }
+    }
+  }
+}
