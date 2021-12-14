@@ -1,0 +1,18 @@
+import java.awt.*;
+
+//Inheritance - extends means the new class inherits all the attributes and methods of the parent class
+
+public class Battleship extends Ships{
+  
+   //Constructor method
+  public Battleship(String defaultName, int size, boolean isAlive, int shipNumber) 
+  { 
+    //Why super() - beacause you need to construct the base class first before building the subclass
+    
+    super(defaultName, size, isAlive, shipNumber); //super ()Calls the constructor of the BaseClass
+    setName("Battleship");
+    setSize(4);
+    setAlive(true);
+    setShipNumber(5);
+  } 
+}
