@@ -1,0 +1,16 @@
+import java.awt.*;
+import java.util.Scanner;// scanner to get input
+
+public class Main_Battleship{
+  
+  Scanner myScanner = new Scanner(System.in);
+  
+  public static void main (String[] args)  {
+    
+   String[] gridLetters = {"zero", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+    
+    int trackingShipsGrid[][] = new int [10][10]; //rows and columns - creates 10x10 grid
+    
+    placeShips(Carrier.getName(), Carrier.getSize(), Carrier.getShipNumber(), trackingShipsGrid);
+    
+  }
