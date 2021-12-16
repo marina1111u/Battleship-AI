@@ -1,0 +1,112 @@
+import java.awt.*;
+import java.util.Scanner;// scanner to get input
+import java.util.Random;
+
+public class Main_Battleship{
+  
+  Scanner myScanner = new Scanner(System.in);
+  
+  public static void main (String[] args)  {
+    
+    boolean turn = true;
+    String[] gridLetters = {"zero", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+    int our_Ships[][] = new int [10][10];
+    
+    for (int r = 0; r < our_Ships.length; r++) { 
+      for (int c = 0; c < our_Ships[r].length; c++) {;
+        our_Ships[r][c] = 1;
+      }  
+    }
+    
+    System.out.println("The program works it's just slow af");
+    
+    Carrier Carrier = new Carrier("Carrier", 5, true, 6);
+    
+    placeShips(Carrier.getName(), Carrier.getSize(), Carrier.getShipNumber(), our_Ships);
+    
+    Battleship Battleship = new Battleship("Battleship", 4, true, 5);
+    
+    placeShips(Battleship.getName(), Battleship.getSize(), Battleship.getShipNumber(), our_Ships);
+    
+    Cruiser Cruiser = new Cruiser("Cruiser", 3, true, 4);
+    
+    placeShips(Cruiser.getName(), Cruiser.getSize(), Cruiser.getShipNumber(), our_Ships);
+    
+    Submarine Submarine = new Submarine("Submarine", 3, true, 3);
+    
+    placeShips(Submarine.getName(), Submarine.getSize(), Submarine.getShipNumber(), our_Ships);
+    
+    Destroyer Destroyer = new Destroyer("Destroyer", 2, true, 0);
+    
+    placeShips(Destroyer.getName(), Destroyer.getSize(), Destroyer.getShipNumber(), our_Ships);
+    
+    
+    for (int r = 0; r < our_Ships.length; r++) { //prints out board
+      for (int c = 0; c < our_Ships[r].length; c++) {  
+        System.out.print(" " + our_Ships[r][c]);
+      } 
+      System.out.println(""); 
+    } 
+    
+    track_own_ships(our_Ships, turn);
+    
+  }
+  
+  
+  //PLACING SHIPS
+  
+  private static void placeShips (String name, int size, int shipNumber, int[][] shipsGrid){ 
+    
+    boolean overlap = true;
+    
+    int[] coordinates = new int[2]; //this array will store the first coordinates
+    
+    while(overlap == true){  
+      for(int i = 0; i < coordinates.length; i++){ //generates first coordinates
+        coordinates[i] = new Random().nextInt(shipsGrid.length);
+        while ((coordinates[i] + size) > 9){ // to prevent an out of bounds error when creating the rest of the coords
+          coordinates[i] = new Random().nextInt(shipsGrid.length);
+        } //end of for loop
+      }  
+      int r = coordinates[0]; //assigns the generated coordinate to the rows variable
+      int c = coordinates[1]; //assigns the generated coordinate to the collumns variable
+      
+      int randNumber = new Random().nextInt(100) + 1; //generates new number -decides whether ship is verticle or horizontal
+      
+      if((randNumber % 2) == 0){ //if num is even, ship is horizontal
+        int total = 0;
+        for(int s = 0; s < (size - 1); s++){
+          total = total + shipsGrid[r][c];
+          r++;
+        }
+        if(total != size){
+          overlap = true; //if total doesnt = size, run the method again and dont place down anything
+        }
+        else{
+          for(int j = 0; j < (size - 1); j++){ // if it is, place down as usual
+            shipsGrid[r][c] = shipNumber;
+            r++;
+            overlap = false;
+          }
+        }
+      }
+      
+      else{ //if num is odd, ship is vertical
+        int total = 0;
+        for(int s = 0 ; s < (size - 1); s++){
+          total = total + shipsGrid[r][c];
+          c++;
+        }
+        if(total != size){
+          overlap = true;
+        }
+        else{
+          for(int j = 0; j < (size - 1); j++){
+            shipsGrid[r][c] = shipNumber;
+            c++;
+            overlap = false;
+          }
+        }
+      }
+    }
+  } // end method      
