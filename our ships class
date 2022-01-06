@@ -1,0 +1,55 @@
+public class Ships {
+  
+  //Characteristics/State - (Instance variables)
+  protected String name;
+  private int size;
+  private boolean isAlive; 
+  private int shipNumber;
+  
+  
+  //Constructor method - has the same name as the class, has parameters that are passed
+  public Ships(String name, int size, boolean isAlive, int shipNumber) 
+  { //This is the constructor
+    this.name = name;
+    this.size = size;
+    this.isAlive = isAlive;
+    this.shipNumber = shipNumber;
+  }
+  
+  //Behaviours: Communicators and Actions
+  
+  //Return type methods to get values - Accessor Method
+  public String getName() { //returns name of the object Ship - Accessor method (getter)
+    return name;
+  }
+  
+  public int getSize() { //returns size of the object Ship - Accessor method (getter)
+    return size;
+  }
+  
+  public boolean alive() { //returns whether or not the ship has sunk (getter)
+    return isAlive;
+  }
+  
+  public int getShipNumber() {
+    return shipNumber;
+  }
+  
+  
+  //Void type methods to set values and also actions to perform - Modifier method (setter0
+  public void setName(String newName) { //sets a new name for the object ship - Modifier method (setter)
+    name = newName;
+  }
+  
+  public void setSize(int newSize) { //sets a new size for the object ship - Modifier method (setter)
+    size = newSize;
+  }
+  
+  public void setAlive(boolean newIsAlive) { //sets whether or n0t the ship has sunk for the object "ship" - modifier method (setter)
+    isAlive = newIsAlive;
+  }
+  
+  public void setShipNumber(int shipNum) {
+    shipNumber = shipNum;
+  }
+}
