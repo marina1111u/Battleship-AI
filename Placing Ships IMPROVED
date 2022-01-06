@@ -1,0 +1,115 @@
+import java.util.Scanner;// scanner to get input
+import java.util.Random;
+
+public class Main_Battleship {
+  
+  Scanner myScanner = new Scanner(System.in);
+  
+  public static void main (String[] args)  { //MAIN PROGRAM
+    
+    // Declaring an array of ships
+    Ships[] shipsArray;
+    
+    shipsArray = new Ships[5]; //array of object to store ALL ship objects and their attributes
+    
+    shipsArray[0] = new Ships("carrier", 5, true, 6);
+    shipsArray[1] = new Ships("battleship", 4, true, 5);
+    shipsArray[2] = new Ships("submarine", 3, true, 4);
+    shipsArray[3] = new Ships("cruiser", 3, true, 3);
+    shipsArray[4] = new Ships("destroyer", 2, true, 0);
+   
+    
+    int our_Ships[][] = new int [10][10];
+    
+    for (int r = 0; r < our_Ships.length; r++) { 
+      for (int c = 0; c < our_Ships[r].length; c++) {;
+        our_Ships[r][c] = 1;
+      }  
+    }
+      
+    
+    placeShips(shipsArray, our_Ships); //calls place ship method
+    
+    
+    for (int r = 0; r < our_Ships.length; r++) { //prints out board
+      for (int c = 0; c < our_Ships[r].length; c++) {  
+        System.out.print(" " + our_Ships[r][c]);
+      } 
+      System.out.println(""); 
+    }
+    
+  }
+  
+  //PLACING SHIPS
+  
+  public static void placeShips (Ships[] shipsArray, int[][] shipsGrid){ 
+    
+    int[] coordinates = new int[2]; //this array will store the first coordinates
+    boolean clear;
+    int randNumber;
+    int r;
+    int c;
+    
+    clear = false;
+    
+    for(int s = 0; s < shipsArray.length;) {   
+      do{
+        for(int i = 0; i < coordinates.length; i++){ //generates first coordinates
+          coordinates[i] = new Random().nextInt(shipsGrid.length);
+          while ((coordinates[i] + shipsArray[s].getSize()) > 10){ // to prevent an out of bounds error when creating the rest of the coords
+            coordinates[i] = new Random().nextInt(shipsGrid.length);
+          } //end of for loop
+        }  
+      } while(clear = false);
+      
+      clear = true;
+      
+      r = coordinates[0]; //assigns the generated coordinate to the rows variable
+      c = coordinates[1]; //assigns the generated coordinate to the collumns variable
+      
+      
+      randNumber = new Random().nextInt(100) + 1; //generates new number -decides whether ship is verticle or horizontal
+      
+      //CHECKING FOR SPACE
+      
+      if((randNumber % 2) == 0){ //if num is even, ship is horizontal
+        for(int j = 0; j < shipsArray[s].getSize(); j++){
+          if (shipsGrid[r + j][c] != 1){
+            //the board is not clear
+            clear = false;
+          }    
+        }
+      }
+      else{
+        for(int j = 0; j < shipsArray[s].getSize(); j++){
+          if (shipsGrid[r][c + j] != 1){
+            //the board is not clear
+            clear = false;
+          }
+        }
+      }
+      
+      //PLACING SHIPS
+      if(clear == true){
+        if((randNumber % 2) == 0){ //if num is even, ship is horizontal
+          for(int j = 0; j < shipsArray[s].getSize(); j++){
+            
+            shipsGrid[r + j][c] = shipsArray[s].getShipNumber(); 
+          }
+        }
+        
+        else if ((randNumber % 2) == 1) { //if num is odd, ship is vertical
+          for(int j = 0; j < shipsArray[s].getSize(); j++){
+            shipsGrid[r][c + j] = shipsArray[s].getShipNumber();   
+          }
+        }
+        s++;
+      }
+      else{
+        System.out.println("");
+      }
+    }// end method
+  }
+} //end main
+
+
